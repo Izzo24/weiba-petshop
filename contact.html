@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>聯絡我們 — 尾巴選物 WEIBA SELECT</title>
+  <meta name="description" content="有任何問題或合作提案，歡迎聯絡尾巴選物。"/>
+  <link rel="icon" href="logos/weiba-petshop-logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Outfit:wght@300;400;500;600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/design.css"/>
+  <style>
+    .contact-hero {
+      padding: calc(var(--nav-h) + 80px) 8vw 80px;
+      background: var(--c-charcoal);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; right: -10%;
+      width: 60%; height: 120%;
+      background: radial-gradient(ellipse, rgba(196,119,90,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .contact-hero-inner { max-width: 1280px; margin: 0 auto; position: relative; }
+    .contact-hero .section-title { color: var(--c-beige); margin-bottom: 0; }
+    .contact-hero .section-label { color: var(--c-terra); }
+
+    /* ── CONTACT LAYOUT ── */
+    #contact-main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 8vw 120px;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* Info column */
+    .contact-info h2 {
+      font-family: var(--ff-cn);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--c-brown);
+      margin-bottom: 24px;
+    }
+    .contact-info p {
+      font-size: 15px;
+      color: var(--c-warm);
+      line-height: 1.8;
+      margin-bottom: 40px;
+    }
+    .contact-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+    .contact-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--c-beige);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-item-text strong {
+      display: block;
+      font-family: var(--ff-en);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-sage);
+      margin-bottom: 4px;
+    }
+    .contact-item-text span {
+      font-size: 15px;
+      color: var(--c-brown);
+    }
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .social-btn {
+      padding: 10px 20px;
+      border: 1.5px solid var(--c-light);
+      border-radius: 24px;
+      font-family: var(--ff-en);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: var(--c-warm);
+      transition: all 0.2s;
+    }
+    .social-btn:hover {
+      background: var(--c-brown);
+      border-color: var(--c-brown);
+      color: white;
+    }
+
+    /* Form column */
+    .contact-form-wrap {
+      background: white;
+      border-radius: 28px;
+      padding: 48px 40px;
+      box-shadow: 0 8px 40px rgba(109,84,65,0.08);
+    }
+    .contact-form-wrap h3 {
+      font-family: var(--ff-cn);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--c-brown);
+      margin-bottom: 32px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .form-row .form-group { margin-bottom: 0; }
+    label {
+      font-family: var(--ff-en);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-warm);
+      font-weight: 500;
+    }
+    input, textarea, select {
+      padding: 14px 18px;
+      border: 1.5px solid var(--c-light);
+      border-radius: 12px;
+      font-family: var(--ff-body);
+      font-size: 15px;
+      color: var(--c-charcoal);
+      background: var(--c-cream);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--c-terra);
+      box-shadow: 0 0 0 3px rgba(196,119,90,0.12);
+    }
+    textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      margin-top: 8px;
+    }
+    .form-submit .btn-primary { width: 100%; justify-content: center; }
+
+    .success-msg {
+      display: none;
+      background: rgba(148,168,154,0.15);
+      border: 1.5px solid var(--c-sage);
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #5A7A62;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    /* FAQ */
+    #faq {
+      background: var(--c-beige);
+      padding: 80px 8vw;
+    }
+    .faq-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .faq-header { text-align: center; margin-bottom: 48px; }
+    .faq-item {
+      border-bottom: 1px solid var(--c-light);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 22px 0;
+      font-family: var(--ff-cn);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--c-brown);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+    .faq-q .arrow {
+      font-size: 20px;
+      color: var(--c-terra);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-q .arrow { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 14px;
+      color: var(--c-warm);
+      line-height: 1.9;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+
+    @media (max-width: 900px) {
+      #contact-main { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .contact-form-wrap { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"    class="nav-link">首頁</a></li>
+      <li><a href="products.html" class="nav-link">選物</a></li>
+      <li><a href="about.html"    class="nav-link">品牌</a></li>
+      <li><a href="contact.html"  class="nav-link">聯絡</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="選單">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="contact-hero">
+  <div class="contact-hero-inner">
+    <p class="section-label">Get in Touch</p>
+    <h1 class="section-title">聯絡我們</h1>
+  </div>
+</header>
+
+<!-- Contact -->
+<main id="contact-main">
+  <div class="contact-info reveal">
+    <h2>有任何問題<br/>我們都在</h2>
+    <p>
+      無論是商品諮詢、訂單問題，
+      或是想與我們合作，
+      歡迎透過以下方式聯繫我們。
+      我們會在 1-2 個工作日內回覆。
+    </p>
+
+    <div class="contact-item">
+      <div class="contact-icon">📧</div>
+      <div class="contact-item-text">
+        <strong>Email</strong>
+        <span>hello@weiba-select.com</span>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📱</div>
+      <div class="contact-item-text">
+        <strong>Line Official</strong>
+        <span>@weibaselect</span>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">📍</div>
+      <div class="contact-item-text">
+        <strong>地址</strong>
+        <span>台北市大安區仁愛路四段<br/>（不接受直接來訪）</span>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">⏰</div>
+      <div class="contact-item-text">
+        <strong>服務時間</strong>
+        <span>週一至週五 10:00–18:00</span>
+      </div>
+    </div>
+
+    <div class="social-links">
+      <a href="#" class="social-btn">Instagram</a>
+      <a href="#" class="social-btn">Facebook</a>
+      <a href="#" class="social-btn">Threads</a>
+    </div>
+  </div>
+
+  <div class="contact-form-wrap reveal reveal-delay-1">
+    <h3>傳送訊息</h3>
+    <form id="contact-form" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">姓名 *</label>
+          <input type="text" id="name" name="name" placeholder="您的姓名" required/>
+        </div>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" placeholder="your@email.com" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="subject">主題</label>
+        <select id="subject" name="subject">
+          <option value="">請選擇主題</option>
+          <option value="order">訂單查詢</option>
+          <option value="product">商品問題</option>
+          <option value="collab">品牌合作</option>
+          <option value="media">媒體採訪</option>
+          <option value="other">其他</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">訊息內容 *</label>
+        <textarea id="message" name="message" placeholder="請輸入您的訊息..." required></textarea>
+      </div>
+      <div class="form-submit">
+        <button type="submit" class="btn-primary">送出訊息 →</button>
+      </div>
+      <div class="success-msg" id="success-msg">
+        ✓ 感謝您的訊息！我們將在 1-2 個工作日內回覆您。
+      </div>
+    </form>
+  </div>
+</main>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <p class="section-label reveal">FAQ</p>
+      <h2 class="section-title reveal reveal-delay-1">常見問題</h2>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        訂單多久會出貨？
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">
+        一般訂單在確認付款後 1-2 個工作日出貨，部分熱門商品或預購商品的出貨時間可能較長，
+        會在商品頁面標示清楚。
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        可以退換貨嗎？
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">
+        收到商品後 7 天內，若有品質問題或缺漏可申請退換貨。
+        食品類（零食、主食）因衛生考量，一經拆封無法退換。
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        有提供國際運送嗎？
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">
+        目前提供台灣本島、離島運送。海外配送（香港、澳門、新加坡）正在規劃中，
+        如有需求可聯絡我們詢問。
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-q">
+        如何成為選物合作品牌？
+        <span class="arrow">+</span>
+      </button>
+      <div class="faq-a">
+        歡迎透過聯絡表單提交品牌合作提案，請附上品牌介紹與商品資訊。
+        我們重視商品安全性與設計質感，每季會審核約 20-30 個合作提案。
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+      <p>精選每一件讓毛孩子幸福的好物。<br/>溫暖設計，真心嚴選。</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="products.html">全部選物</a>
+      <a href="products.html?cat=comfort">舒適寢具</a>
+      <a href="products.html?cat=nutrition">天然食品</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="about.html">品牌故事</a>
+      <a href="contact.html">聯絡我們</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 尾巴選物 WEIBA SELECT. All rights reserved.</span>
+    <span>Made with ♡ for pets & people</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// Form submit (demo)
+document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('success-msg');
+  if (msg) {
+    msg.style.display = 'block';
+    e.target.querySelector('button[type="submit"]').textContent = '已送出 ✓';
+    e.target.querySelector('button[type="submit"]').style.background = 'var(--c-sage)';
+  }
+});
+</script>
+</body>
+</html>
