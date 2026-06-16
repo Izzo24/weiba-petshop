@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>選物 — 尾巴選物 WEIBA SELECT</title>
+  <meta name="description" content="精選寵物好物：天然食品、舒適寢具、互動玩具、職人皮革配件"/>
+  <link rel="icon" href="logos/weiba-petshop-logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Outfit:wght@300;400;500;600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/design.css"/>
+  <style>
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: calc(var(--nav-h) + 80px) 8vw 80px;
+      background: var(--c-charcoal);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(196,119,90,0.22) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; position: relative; }
+    .page-hero .section-label { color: var(--c-terra); }
+    .page-hero .section-title { color: var(--c-beige); margin-bottom: 0; }
+
+    /* ── FILTER BAR ── */
+    #filter-bar {
+      background: white;
+      border-bottom: 1px solid rgba(109,84,65,0.08);
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 800;
+    }
+    .filter-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 8vw;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+    .filter-inner::-webkit-scrollbar { display: none; }
+    .filter-btn {
+      flex-shrink: 0;
+      background: transparent;
+      border: 1.5px solid var(--c-light);
+      border-radius: 24px;
+      padding: 8px 20px;
+      font-family: var(--ff-en);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-warm);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--c-brown);
+      border-color: var(--c-brown);
+      color: white;
+    }
+
+    /* ── PRODUCT CATALOG ── */
+    #catalog {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 60px 8vw 100px;
+    }
+    .catalog-meta {
+      font-size: 13px;
+      color: var(--c-warm);
+      margin-bottom: 40px;
+      font-family: var(--ff-en);
+      letter-spacing: 0.06em;
+    }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    /* Product card (expanded) */
+    .cat-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1),
+                  box-shadow 0.45s ease;
+    }
+    .cat-card:hover {
+      transform: translateY(-10px) scale(1.01);
+      box-shadow: 0 32px 72px rgba(109,84,65,0.14);
+    }
+    .cat-img {
+      aspect-ratio: 5/4;
+      background: var(--c-cream);
+      overflow: hidden;
+      position: relative;
+    }
+    .cat-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .cat-card:hover .cat-img img { transform: scale(1.06); }
+
+    .cat-badges {
+      position: absolute;
+      top: 16px; left: 16px;
+      display: flex; gap: 6px;
+    }
+    .badge {
+      font-family: var(--ff-en);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 16px;
+    }
+    .badge-new     { background: var(--c-terra); color: white; }
+    .badge-popular { background: var(--c-sage); color: white; }
+    .badge-organic { background: #7C9B6E; color: white; }
+
+    .cat-info { padding: 22px 26px 26px; }
+    .cat-row { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cat-names { flex: 1; }
+    .#at-cn {
+      font-family: var(--ff-cn);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--c-brown);
+      margin-bottom: 2px;
+    }
+    .cat-en {
+      font-family: var(--ff-en);
+      font-size: 12px;
+      color: var(--c-warm);
+      margin-bottom: 10px;
+    }
+    .cat-desc {
+      font-size: 13px;
+      color: var(--c-warm);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .cat-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cat-price {
+      font-family: var(--ff-en);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--c-brown);
+    }
+    .cat-price sub {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--c-warm);
+      vertical-align: baseline;
+      margin-right: 4px;
+    }
+    .cat-add {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-cart {
+      background: var(--c-brown);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 10px 22px;
+      font-family: var(--ff-en);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-cart:hover { background: var(--c-terra); transform: scale(1.04); }
+    .btn-wish {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--c-beige);
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .btn-wish:hover { transform: scale(1.1); }
+
+    @media (max-width: 600px) {
+      .catalog-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav" role="navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"    class="nav-link">首頁</a></li>
+      <li><a href="products.html" class="nav-link">選物</a></li>
+      <li><a href="about.html"    class="nav-link">品牌</a></li>
+      <li><a href="contact.html"  class="nav-link">聯絡</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="選單">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<header class="page-hero">
+  <div class="page-hero-inner">
+    <p class="section-label">Curated Collection</p>
+    <h1 class="section-title">選物目錄</h1>
+  </div>
+</header>
+
+<!-- Filters -->
+<div id="filter-bar" role="navigation" aria-label="商品分類">
+  <div class="filter-inner">
+    <button class="filter-btn active" data-cat="all">全部</button>
+    <button class="filter-btn" data-cat="comfort">舒適寢具</button>
+    <button class="filter-btn" data-cat="nutrition">天然食品</button>
+    <button class="filter-btn" data-cat="play">玩具益智</button>
+    <button class="filter-btn" data-cat="lifestyle">生活風格</button>
+    <button class="filter-btn" data-cat="grooming">清潔美容</button>
+  </div>
+</div>
+
+<!-- Catalog -->
+<main id="catalog">
+  <p class="catalog-meta">共 12 件商品</p>
+  <div class="catalog-grid">
+
+    <article class="cat-card reveal" data-cat="comfort">
+      <div class="cat-img">
+        <div class="cat-badges"><span class="badge badge-new">New</span></div>
+        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=700&q=80" alt="天然羊毛窩墊"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">天然羊毛窩墊</p>
+        <p class="cat-en">Merino Wool Pet Blanket</p>
+        <p class="cat-desc">紐西蘭美麗諾羊毛，四季適用。天然抗菌、調溫，讓毛孩整年都舒適。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>1,280</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal reveal-delay-1" data-cat="nutrition">
+      <div class="cat-img">
+        <div class="cat-badges"><span class="badge badge-organic">有機</span></div>
+        <img src="https://images.unsplash.com/photo-1548767797-d8c844163c4a?w=700&q=80" alt="有機雞肉條"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">有機雞肉條</p>
+        <p class="cat-en">Organic Chicken Strips</p>
+        <p class="cat-desc">台灣在地有機放牧雞，低溫烘乾。無防腐劑、無添加色素，毛孩最愛。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>380</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal reveal-delay-2" data-cat="lifestyle">
+      <div class="cat-img">
+        <div class="cat-badges"><span class="badge badge-popular">熱銷</span></div>
+        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=700&q=80" alt="植鞣革牽繩"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">植鞣革牽繩</p>
+        <p class="cat-en">Vegetable-Tanned Leather Lead</p>
+        <p class="cat-desc">義大利植鞣牛皮，越用越有質感。黃銅五金，手縫收邊，職人工藝。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>1,680</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal" data-cat="play">
+      <div class="cat-img">
+        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=700&q=80" alt="益智慢食玩具"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">益智慢食玩具</p>
+        <p class="cat-en">Slow Feeder Puzzle Toy</p>
+        <p class="cat-desc">獸醫師推薦設計，延緩進食速度，同時訓練狗狗嗅覺與大腦。食品級矽膠。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>560</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal reveal-delay-1" data-cat="comfort">
+      <div class="cat-img">
+        <div class="cat-badges"><span class="badge badge-popular">熱銷</span></div>
+        <img src="https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=700&q=80" alt="記憶棉睡床"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">記憶棉圓形睡床</p>
+        <p class="cat-en">Memory Foam Round Bed</p>
+        <p class="cat-desc">NASA記憶棉材質，完美支撐毛孩關節。360度環抱設計，讓毛孩安心入睡。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>2,280</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal reveal-delay-2" data-cat="grooming">
+      <div class="cat-img">
+        <img src="https://images.unsplash.com/photo-1534361960057-19f4434e2ec6?w=700&q=80" alt="天然沐浴露"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">天然植萃沐浴露</p>
+        <p class="cat-en">Natural Plant-Based Shampoo</p>
+        <p class="cat-desc">燕麥+薰衣草配方，溫和潔淨不刺激敏感肌。適合各種毛色，沐浴後絲柔光澤。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>480</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal" data-cat="nutrition">
+      <div class="cat-img">
+        <div class="cat-badges"><span class="badge badge-new">New</span><span class="badge badge-organic">有機</span></div>
+        <img src="https://images.unsplash.com/photo-1602584430897-9aca5e8aa4f4?w=700&q=80" alt="凍乾主食"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">凍乾生食主食</p>
+        <p class="cat-en">Freeze-Dried Raw Food</p>
+        <p class="cat-desc">AAFCO完整營養標準，95%新鮮肉品。生食的好處，凍乾的便利。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>890</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal reveal-delay-1" data-cat="lifestyle">
+      <div class="cat-img">
+        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=700&q=80" alt="寵物提籃"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">藤編外出提籃</p>
+        <p class="cat-en">Rattan Carrier Basket</p>
+        <p class="cat-desc">越南職人手工藤編，航空級強度。航空出行皆適用，時尚與機能兼備。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>3,200</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="cat-card reveal reveal-delay-2" data-cat="play">
+      <div class="cat-img">
+        <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?w=700&q=80" alt="貓草玩具"/>
+      </div>
+      <div class="cat-info">
+        <p class="cat-cn">有機貓草玩具組</p>
+        <p class="cat-en">Organic Catnip Toy Set</p>
+        <p class="cat-desc">日本有機貓草填充，手工縫製棉麻外套。四種造型，讓貓咪百玩不膩。</p>
+        <div class="cat-footer">
+          <p class="cat-price"><sub>NT$</sub>420</p>
+          <div class="cat-add">
+            <button class="btn-wish" aria-label="收藏">♡</button>
+            <button class="btn-cart">加入購物車</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+      <p>精選每一件讓毛孩子幸福的好物。<br/>溫暖設計，真心嚴選。</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="products.html">全部選物</a>
+      <a href="products.html?cat=comfort">舒適寢具</a>
+      <a href="products.html?cat=nutrition">天然食品</a>
+      <a href="products.html?cat=play">玩具益智</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="about.html">品牌故事</a>
+      <a href="about.html#values">選品理念</a>
+      <a href="contact.html">聯絡我們</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 尾巴選物 WEIBA SELECT. All rights reserved.</span>
+    <span>Made with ♡ for pets & people</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+// Filter functionality
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.cat-card');
+const meta = document.querySelector('.catalog-meta');
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const cat = btn.dataset.cat;
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    let visible = 0;
+    cards.forEach(card => {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    meta.textContent = `共 ${visible} 件商品`;
+  });
+});
+
+// Wishlist heart toggle
+document.querySelectorAll('.btn-wish').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    btn.textContent = btn.textContent === '♡' ? '♥' : '♡';
+    btn.style.color = btn.textContent === '♥' ? '#C4775A' : '';
+  });
+});
+</script>
+</body>
+</html>
