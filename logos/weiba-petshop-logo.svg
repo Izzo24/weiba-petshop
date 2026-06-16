@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200">
+  <!-- Paw mark -->
+  <ellipse cx="60" cy="120" rx="32" ry="38" fill="#6D5441"/>
+  <ellipse cx="40" cy="78" rx="15" ry="18" fill="#6D5441"/>
+  <ellipse cx="63" cy="68" rx="15" ry="18" fill="#6D5441"/>
+  <ellipse cx="87" cy="72" rx="14" ry="16" fill="#6D5441"/>
+  <ellipse cx="107" cy="86" rx="13" ry="16" fill="#6D5441"/>
+  <!-- Text -->
+  <text x="136" y="128" font-family="Noto Serif TC,serif" font-size="88" font-weight="700" fill="#6D5441">尾巴選物</text>
+  <text x="138" y="165" font-family="Outfit,sans-serif" font-size="28" letter-spacing="8" fill="#8B6F5C">WEIBA · SELECT</text>
+</svg>
