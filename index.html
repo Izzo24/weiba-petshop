@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>尾巴選物 WEIBA SELECT — 給毛孩子的精選好物</title>
+  <meta name="description" content="尾巴選物，精選每一件讓毛孩子幸福的好物。溫暖設計，真心嚴選。"/>
+  <link rel="icon" href="logos/weiba-petshop-logo.png"/>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Outfit:wght@300;400;500;600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Design system -->
+  <link rel="stylesheet" href="css/design.css"/>
+
+  <style>
+    /* ── HERO 3D CANVAS ── */
+    #hero {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      min-height: 640px;
+      overflow: hidden;
+      background: var(--c-charcoal);
+    }
+
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(44,36,32,0.45) 0%,
+        rgba(44,36,32,0.15) 50%,
+        rgba(44,36,32,0.6) 100%
+      );
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0 8vw;
+      padding-top: var(--nav-h);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--ff-en);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--c-terra);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.9s 0.3s var(--ease-out) forwards;
+    }
+
+    .hero-title {
+      font-family: var(--ff-cn);
+      font-size: clamp(52px, 8vw, 110px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--c-beige);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 1s 0.5s var(--ease-out) forwards;
+    }
+
+    .hero-title span {
+      color: var(--c-terra);
+      display: inline-block;
+    }
+
+    .hero-subtitle {
+      font-family: var(--ff-en);
+      font-size: clamp(14px, 2vw, 20px);
+      font-weight: 300;
+      color: rgba(245, 239, 230, 0.7);
+      letter-spacing: 0.06em;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.7s var(--ease-out) forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s 0.9s var(--ease-out) forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s ease forwards;
+    }
+    .hero-scroll span {
+      font-family: var(--ff-en);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,239,230,0.5);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(245,239,230,0.5), transparent);
+      animation: scrollPulse 2s 1.6s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* ── INTRO SECTION ── */
+    #intro {
+      padding: 120px 8vw;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .intro-visual {
+      position: relative;
+    }
+    .intro-img-wrap {
+      border-radius: 24px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--c-light);
+    }
+    .intro-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s var(--ease-smooth);
+    }
+    .intro-img-wrap:hover img { transform: scale(1.04); }
+
+    .intro-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 120px;
+      height: 120px;
+      background: var(--c-terra);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--ff-cn);
+      font-size: 14px;
+      color: white;
+      line-height: 1.5;
+      text-align: center;
+      padding: 12px;
+    }
+    .intro-badge strong { font-size: 28px; font-family: var(--ff-en); }
+
+    /* ── PRODUCT GRID ── */
+    #products {
+      background: var(--c-beige);
+      padding: 100px 8vw;
+    }
+    .products-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+    }
+    .products-header .right { text-align: right; }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.4s var(--ease-smooth),
+                  box-shadow 0.4s var(--ease-smooth);
+      transform-style: preserve-3d;
+      perspective: 800px;
+    }
+    .product-card:hover {
+      transform: translateY(-8px) rotateX(2deg);
+      box-shadow: 0 24px 60px rgba(109,84,65,0.16);
+    }
+
+    .product-img {
+      aspect-ratio: 1;
+      background: var(--c-cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s var(--ease-smooth);
+    }
+    .product-card:hover .product-img img { transform: scale(1.08); }
+
+    .product-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--c-terra);
+      color: white;
+      font-family: var(--ff-en);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+
+    .product-info {
+      padding: 20px 24px 24px;
+    }
+    .product-cat {
+      font-family: var(--ff-en);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--c-sage);
+      margin-bottom: 6px;
+    }
+    .product-name {
+      font-family: var(--ff-cn);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--c-brown);
+      margin-bottom: 4px;
+    }
+    .product-name-en {
+      font-size: 12px;
+      color: var(--c-warm);
+      margin-bottom: 16px;
+      font-family: var(--ff-en);
+    }
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .product-price {
+      font-family: var(--ff-en);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--c-brown);
+    }
+    .product-add {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--c-beige);
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-brown);
+      transition: background 0.2s, transform 0.2s;
+    }
+    .product-add:hover {
+      background: var(--c-brown);
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* ── BRAND STORY ── */
+    #story {
+      padding: 120px 8vw;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .story-quote {
+      font-family: var(--ff-cn);
+      font-size: clamp(22px, 3vw, 36px);
+      line-height: 1.7;
+      color: var(--c-brown);
+      position: relative;
+      padding-left: 28px;
+    }
+    .story-quote::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      background: var(--c-terra);
+      border-radius: 2px;
+    }
+    .story-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .story-img {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--c-light);
+    }
+    .story-img:first-child { margin-top: 32px; aspect-ratio: 3/4; }
+    .story-img:last-child { margin-bottom: 32px; aspect-ratio: 3/4; }
+    .story-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ── VALUES STRIP ── */
+    #values {
+      background: var(--c-charcoal);
+      padding: 80px 8vw;
+    }
+    .values-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+    }
+    .value-item { text-align: center; }
+    .value-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      background: rgba(196,119,90,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .value-title {
+      font-family: var(--ff-cn);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--c-beige);
+      margin-bottom: 8px;
+    }
+    .value-desc {
+      font-size: 13px;
+      color: rgba(245,239,230,0.5);
+      line-height: 1.7;
+    }
+
+    /* ── CTA BANNER ── */
+    #cta-banner {
+      padding: 100px 8vw;
+      text-align: center;
+      background: var(--c-beige);
+    }
+    .cta-banner-inner { max-width: 640px; margin: 0 auto; }
+    .cta-banner-inner .section-title { margin: 0 auto 16px; }
+    .cta-banner-inner p {
+      font-size: 16px;
+      color: var(--c-warm);
+      margin-bottom: 40px;
+    }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #intro, #story { grid-template-columns: 1fr; gap: 48px; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .intro-badge { bottom: 12px; right: 12px; width: 96px; height: 96px; }
+      .story-imgs { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-content { padding: 0 6vw; padding-top: var(--nav-h); }
+      .products-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────────────────────────── -->
+<nav class="site-nav" role="navigation" aria-label="主選單">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="尾巴選物 首頁">
+      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物 WEIBA SELECT"/>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html"    class="nav-link">首頁</a></li>
+      <li><a href="products.html" class="nav-link">選物</a></li>
+      <li><a href="about.html"    class="nav-link">品牌</a></li>
+      <li><a href="contact.html"  class="nav-link">聯絡</a></li>
+    </ul>
+    <button class="nav-hamburger" aria-label="開啟選單">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── HERO 3D ────────────────────────────────────────────────────── -->
+<section id="hero" aria-label="主視覺">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Warm · Curated · Beloved</p>
+    <h1 class="hero-title">
+      每一條<span>尾巴</span><br/>
+      都值得最好的
+    </h1>
+    <p class="hero-subtitle">Handpicked goods for the pets you love most</p>
+    <div class="hero-cta">
+      <a href="products.html" class="btn-primary">探索選物 →</a>
+      <a href="about.html" class="btn-outline" style="color:var(--c-beige);border-color:rgba(245,239,230,0.4)">品牌故事</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ── INTRO ──────────────────────────────────────────────────────── -->
+<section id="intro">
+  <div class="intro-visual reveal">
+    <div class="intro-img-wrap">
+      <img
+        src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=800&q=80"
+        alt="柴犬在溫暖的陽光裡"
+        loading="lazy"
+      />
+    </div>
+    <div class="intro-badge">
+      <strong>500+</strong>
+      精選好物
+    </div>
+  </div>
+  <div class="intro-text">
+    <p class="section-label reveal">Our Promise</p>
+    <h2 class="section-title reveal reveal-delay-1">真心嚴選，<br/>只給最愛</h2>
+    <p class="section-body reveal reveal-delay-2">
+      每一件選物都經過我們親手試用，用飼主的眼光嚴格把關，
+      確認每個細節都讓毛孩子安心舒適。
+      從食材到玩具，從床墊到牽繩，
+      我們只選那些讓自己也放心的東西。
+    </p>
+    <br/>
+    <a href="about.html" class="btn-outline reveal reveal-delay-3">了解更多</a>
+  </div>
+</section>
+
+<!-- ── PRODUCTS ───────────────────────────────────────────────────── -->
+<section id="products">
+  <div class="products-header">
+    <div>
+      <p class="section-label reveal">Featured Picks</p>
+      <h2 class="section-title reveal reveal-delay-1">本週精選</h2>
+    </div>
+    <div class="right reveal">
+      <a href="products.html" class="btn-outline">查看全部</a>
+    </div>
+  </div>
+
+  <div class="product-grid">
+
+    <article class="product-card reveal">
+      <div class="product-img">
+        <span class="product-tag">New</span>
+        <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&q=80" alt="天然羊毛毯"/>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Comfort · 毯子</p>
+        <p class="product-name">天然羊毛窩墊</p>
+        <p class="product-name-en">Merino Wool Pet Blanket</p>
+        <div class="product-footer">
+          <span class="product-price">NT$1,280</span>
+          <button class="product-add" aria-label="加入購物車">+</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card reveal reveal-delay-1">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1548767797-d8c844163c4a?w=600&q=80" alt="有機零食"/>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Nutrition · 零食</p>
+        <p class="product-name">有機雞肉條</p>
+        <p class="product-name-en">Organic Chicken Strips</p>
+        <div class="product-footer">
+          <span class="product-price">NT$380</span>
+          <button class="product-add" aria-label="加入購物車">+</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card reveal reveal-delay-2">
+      <div class="product-img">
+        <span class="product-tag">Bestseller</span>
+        <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&q=80" alt="皮革牽繩"/>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Lifestyle · 牽繩</p>
+        <p class="product-name">植鞣革牽繩</p>
+        <p class="product-name-en">Vegetable-Tanned Leather Lead</p>
+        <div class="product-footer">
+          <span class="product-price">NT$1,680</span>
+          <button class="product-add" aria-label="加入購物車">+</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="product-card reveal reveal-delay-3">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=600&q=80" alt="互動玩具"/>
+      </div>
+      <div class="product-info">
+        <p class="product-cat">Play · 玩具</p>
+        <p class="product-name">益智慢食玩具</p>
+        <p class="product-name-en">Slow Feeder Puzzle Toy</p>
+        <div class="product-footer">
+          <span class="product-price">NT$560</span>
+          <button class="product-add" aria-label="加入購物車">+</button>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── BRAND STORY ─────────────────────────────────────────────────── -->
+<section id="story">
+  <div class="story-text">
+    <p class="section-label reveal">Our Story</p>
+    <blockquote class="story-quote reveal reveal-delay-1">
+      「一個養了兩隻貓的設計師，
+      買不到讓自己滿意的東西，
+      於是決定自己找。」
+    </blockquote>
+    <br/>
+    <p class="section-body reveal reveal-delay-2">
+      尾巴選物誕生於一種執念：所有我們在意的東西，
+      都應該同時讓人和毛孩感到舒適。
+      我們從世界各地尋訪職人製作，
+      帶回那些讓人一眼就知道「對了」的好東西。
+    </p>
+    <br/>
+    <a href="about.html" class="btn-primary reveal reveal-delay-3">品牌故事 →</a>
+  </div>
+  <div class="story-imgs reveal reveal-delay-2" aria-hidden="true">
+    <div class="story-img">
+      <img
+        src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?w=500&q=80"
+        alt="寵物與主人"
+        loading="lazy"
+      />
+    </div>
+    <div class="story-img">
+      <img
+        src="https://images.unsplash.com/photo-1574158622682-e40e69881006?w=500&q=80"
+        alt="選物細節"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- ── VALUES ─────────────────────────────────────────────────────── -->
+<section id="values">
+  <div class="values-grid">
+    <div class="value-item reveal">
+      <div class="value-icon">🌿</div>
+      <p class="value-title">天然成分</p>
+      <p class="value-desc">只選無毒、天然材料，讓毛孩子安心使用</p>
+    </div>
+    <div class="value-item reveal reveal-delay-1">
+      <div class="value-icon">✋</div>
+      <p class="value-title">親手嚴選</p>
+      <p class="value-desc">每件商品由飼主親身試用後才上架</p>
+    </div>
+    <div class="value-item reveal reveal-delay-2">
+      <div class="value-icon">📦</div>
+      <p class="value-title">永續包裝</p>
+      <p class="value-desc">使用可回收材質包裝，愛護地球也愛護毛孩</p>
+    </div>
+    <div class="value-item reveal reveal-delay-3">
+      <div class="value-icon">💛</div>
+      <p class="value-title">用心服務</p>
+      <p class="value-desc">有任何問題，我們都在，用心回應每一個需求</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ────────────────────────────────────────────────────────── -->
+<section id="cta-banner">
+  <div class="cta-banner-inner">
+    <p class="section-label reveal">Join the Family</p>
+    <h2 class="section-title reveal reveal-delay-1">開始為你的毛孩<br/>選一件好東西</h2>
+    <p class="reveal reveal-delay-2">每一次精心挑選，都是對愛的表達。</p>
+    <div class="cta-buttons reveal reveal-delay-3">
+      <a href="products.html" class="btn-primary">立即選物</a>
+      <a href="contact.html" class="btn-outline">聯絡我們</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+      <p>精選每一件讓毛孩子幸福的好物。<br/>溫暖設計，真心嚴選。</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="products.html">全部選物</a>
+      <a href="products.html?cat=comfort">舒適寢具</a>
+      <a href="products.html?cat=nutrition">天然食品</a>
+      <a href="products.html?cat=play">玩具益智</a>
+    </div>
+    <div class="footer-col">
+      <h4>Brand</h4>
+      <a href="about.html">品牌故事</a>
+      <a href="about.html#values">選品理念</a>
+      <a href="contact.html">聯絡我們</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 尾巴選物 WEIBA SELECT. All rights reserved.</span>
+    <span>Made with ♡ for pets & people</span>
+  </div>
+</footer>
+
+<!-- ── THREE.JS HERO ───────────────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas || typeof THREE === 'undefined') return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(55, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+  camera.position.set(0, 0, 7);
+
+  const ambient = new THREE.AmbientLight(0xF5EFE6, 0.6);
+  scene.add(ambient);
+  const pointA = new THREE.PointLight(0xC4775A, 2.5, 20);
+  pointA.position.set(4, 3, 4);
+  scene.add(pointA);
+  const pointB = new THREE.PointLight(0x94A89A, 1.5, 20);
+  pointB.position.set(-5, -2, 3);
+  scene.add(pointB);
+  const pointC = new THREE.PointLight(0xF5EFE6, 1, 16);
+  pointC.position.set(0, 6, 2);
+  scene.add(pointC);
+
+  const matBrown = new THREE.MeshPhongMaterial({ color: 0x8B6F5C, shininess: 80, specular: 0xF5EFE6 });
+  const matTerra = new THREE.MeshPhongMaterial({ color: 0xC4775A, shininess: 60, specular: 0xF5EFE6 });
+  const matSage = new THREE.MeshPhongMaterial({ color: 0x94A89A, shininess: 50, specular: 0xF5EFE6, transparent: true, opacity: 0.85 });
+  const matCream = new THREE.MeshPhongMaterial({ color: 0xF5EFE6, shininess: 40, transparent: true, opacity: 0.7 });
+
+  function makeSphere(r, mat, x, y, z, rx, ry) {
+    const g = new THREE.SphereGeometry(r, 32, 32);
+    const m = new THREE.Mesh(g, mat);
+    m.position.set(x, y, z);
+    if (rx) m.rotation.x = rx;
+    if (ry) m.rotation.y = ry;
+    return m;
+  }
+  function makeBox(w, h, d, mat, x, y, z, rx, ry, rz) {
+    const g = new THREE.BoxGeometry(w, h, d, 2, 2, 2);
+    const m = new THREE.Mesh(g, mat);
+    m.position.set(x, y, z);
+    if (rx) m.rotation.x = rx;
+    if (ry) m.rotation.y = ry;
+    if (rz) m.rotation.z = rz;
+    return m;
+  }
+  function makeTorus(R, r, mat, x, y, z, rx) {
+    const g = new THREE.TorusGeometry(R, r, 24, 64);
+    const m = new THREE.Mesh(g, mat);
+    m.position.set(x, y, z);
+    m.rotation.x = rx || 0;
+    return m;
+  }
+  function makeCone(r, h, mat, x, y, z) {
+    const g = new THREE.ConeGeometry(r, h, 32);
+    const m = new THREE.Mesh(g, mat);
+    m.position.set(x, y, z);
+    return m;
+  }
+
+  const objects = [];
+  const torusMain = makeTorus(1.4, 0.18, matBrown, 2.8, 0.4, -1.5, Math.PI * 0.3);
+  scene.add(torusMain);
+  objects.push({ mesh: torusMain, speed: 0.4, offset: 0, floatAmp: 0.18, rotX: 0.003, rotY: 0.005 });
+  const sph1 = makeSphere(0.65, matTerra, -3.2, 1.5, -0.5);
+  scene.add(sph1);
+  objects.push({ mesh: sph1, speed: 0.5, offset: 1.2, floatAmp: 0.22, rotX: 0.002, rotY: 0.004 });
+  const sph2 = makeSphere(0.35, matTerra, -2.6, 2.4, 0.3);
+  scene.add(sph2);
+  objects.push({ mesh: sph2, speed: 0.6, offset: 0.5, floatAmp: 0.16, rotX: 0.003, rotY: 0.002 });
+  const sph3 = makeSphere(0.3, matTerra, -3.7, 2.2, 0.2);
+  scene.add(sph3);
+  objects.push({ mesh: sph3, speed: 0.55, offset: 0.8, floatAmp: 0.14, rotX: 0.004, rotY: 0.003 });
+  const sph4 = makeSphere(0.28, matBrown, -2.4, 0.8, 0.5);
+  scene.add(sph4);
+  objects.push({ mesh: sph4, speed: 0.48, offset: 1.8, floatAmp: 0.19, rotX: 0.002, rotY: 0.005 });
+  const box1 = makeBox(0.9, 0.5, 0.5, matSage, 3.5, -1.8, -0.5, 0.4, 0.6, 0.2);
+  scene.add(box1);
+  objects.push({ mesh: box1, speed: 0.35, offset: 2.5, floatAmp: 0.25, rotX: 0.004, rotY: 0.006 });
+  const torusSmall = makeTorus(0.55, 0.12, matCream, -1.2, -2.2, 0.8, Math.PI * 0.15);
+  scene.add(torusSmall);
+  objects.push({ mesh: torusSmall, speed: 0.7, offset: 0.3, floatAmp: 0.2, rotX: 0.005, rotY: 0.007 });
+  const cone1 = makeCone(0.28, 0.7, matBrown, 1.2, 2.8, 0.6);
+  scene.add(cone1);
+  objects.push({ mesh: cone1, speed: 0.42, offset: 3.1, floatAmp: 0.17, rotX: 0.006, rotY: 0.003 });
+  const cone2 = makeCone(0.2, 0.5, matTerra, -0.8, -3.0, -0.3);
+  scene.add(cone2);
+  objects.push({ mesh: cone2, speed: 0.52, offset: 1.5, floatAmp: 0.21, rotX: 0.004, rotY: 0.008 });
+  const sphBg1 = makeSphere(0.18, matCream, 0.6, 3.2, -1.2);
+  scene.add(sphBg1);
+  objects.push({ mesh: sphBg1, speed: 0.8, offset: 2.0, floatAmp: 0.12, rotX: 0, rotY: 0 });
+  const sphBg2 = makeSphere(0.14, matSage, -1.8, 3.5, -0.5);
+  scene.add(sphBg2);
+  objects.push({ mesh: sphBg2, speed: 0.9, offset: 4.0, floatAmp: 0.1, rotX: 0, rotY: 0 });
+
+  const PARTICLE_COUNT = 220;
+  const pPositions = new Float32Array(PARTICLE_COUNT * 3);
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    pPositions[i * 3]     = (Math.random() - 0.5) * 14;
+    pPositions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+    pPositions[i * 3 + 2] = (Math.random() - 0.5) * 6 - 2;
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+  const pMat = new THREE.PointsMaterial({ color: 0xF5EFE6, size: 0.045, transparent: true, opacity: 0.55, sizeAttenuation: true });
+  const particles = new THREE.Points(pGeo, pMat);
+  scene.add(particles);
+
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+  window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth  - 0.5) * 2;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  });
+  const onResize = () => {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  };
+  window.addEventListener('resize', onResize);
+  const clock = new THREE.Clock();
+  let animId;
+  const heroEl = document.getElementById('hero');
+  const animate = () => {
+    animId = requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    targetX += (mouseX * 0.35 - targetX) * 0.055;
+    targetY += (-mouseY * 0.25 - targetY) * 0.055;
+    camera.position.x = targetX;
+    camera.position.y = targetY;
+    camera.lookAt(0, 0, 0);
+    objects.forEach(obj => {
+      const base = obj.mesh.userData._baseY ?? obj.mesh.position.y;
+      if (!obj.mesh.userData._baseY) obj.mesh.userData._baseY = base;
+      obj.mesh.position.y = base + Math.sin(t * obj.speed + obj.offset) * obj.floatAmp;
+      obj.mesh.rotation.x += obj.rotX;
+      obj.mesh.rotation.y += obj.rotY;
+    });
+    particles.rotation.y = t * 0.03;
+    particles.rotation.x = t * 0.015;
+    renderer.render(scene, camera);
+  };
+  animate();
+  const heroObs = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) { cancelAnimationFrame(animId); } else { animate(); }
+  });
+  heroObs.observe(heroEl);
+})();
+</script>
+
+<script src="js/main.js"></script>
+</body>
+</html>
