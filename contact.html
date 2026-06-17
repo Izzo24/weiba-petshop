@@ -237,7 +237,7 @@
 <nav class="site-nav" role="navigation">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
-      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+      <img src="logos/weiba-petshop-logo-white.svg" alt="尾巴選物"/>
     </a>
     <ul class="nav-links" role="list">
       <li><a href="index.html"    class="nav-link">首頁</a></li>
@@ -271,28 +271,28 @@
     </p>
 
     <div class="contact-item">
-      <div class="contact-icon">📧</div>
+      <div class="contact-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4775A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
       <div class="contact-item-text">
         <strong>Email</strong>
         <span>hello@weiba-select.com</span>
       </div>
     </div>
     <div class="contact-item">
-      <div class="contact-icon">📱</div>
+      <div class="contact-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4775A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5c0 3.6-3.8 6.5-8.5 6.5a10 10 0 0 1-3-.5L4.5 19l1-3.3A6 6 0 0 1 4 11.5C4 7.9 7.8 5 12.5 5S21 7.9 21 11.5Z"/></svg></div>
       <div class="contact-item-text">
         <strong>Line Official</strong>
         <span>@weibaselect</span>
       </div>
     </div>
     <div class="contact-item">
-      <div class="contact-icon">📍</div>
+      <div class="contact-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4775A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c4-4.5 7-7.8 7-11a7 7 0 1 0-14 0c0 3.2 3 6.5 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
       <div class="contact-item-text">
         <strong>地址</strong>
         <span>台北市大安區仁愛路四段<br/>（不接受直接來訪）</span>
       </div>
     </div>
     <div class="contact-item">
-      <div class="contact-icon">⏰</div>
+      <div class="contact-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C4775A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
       <div class="contact-item-text">
         <strong>服務時間</strong>
         <span>週一至週五 10:00–18:00</span>
@@ -338,7 +338,7 @@
         <button type="submit" class="btn-primary">送出訊息 →</button>
       </div>
       <div class="success-msg" id="success-msg">
-        ✓ 感謝您的訊息！我們將在 1-2 個工作日內回覆您。
+        <svg viewBox="0 0 24 24" width="16" height="16" style="display:inline-block;vertical-align:-3px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;" aria-hidden="true"><path d="m5 12 4 4 10-10"/></svg> 感謝您的訊息！我們將在 1-2 個工作日內回覆您。
       </div>
     </form>
   </div>
@@ -402,7 +402,7 @@
 <footer class="site-footer">
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="logos/weiba-petshop-logo-white.png" alt="尾巴選物"/>
+      <img src="logos/weiba-petshop-logo-white.svg" alt="尾巴選物"/>
       <p>精選每一件讓毛孩子幸福的好物。<br/>溫暖設計，真心嚴選。</p>
     </div>
     <div class="footer-col">
@@ -419,7 +419,7 @@
   </div>
   <div class="footer-bottom">
     <span>© 2025 尾巴選物 WEIBA SELECT. All rights reserved.</span>
-    <span>Made with ♡ for pets & people</span>
+    <span>Made with <svg viewBox="0 0 24 24" width="13" height="13" style="display:inline-block;vertical-align:-1px;fill:#C4775A;" aria-hidden="true"><path d="M12 20s-7-4.4-9.3-8.6C1.2 8.3 2.6 5 6 5c2 0 3.2 1.3 4 2.5C10.8 6.3 12 5 14 5c3.4 0 4.8 3.3 3.3 6.4C19 15.6 12 20 12 20Z"/></svg> for pets & people</span>
   </div>
 </footer>
 
@@ -441,7 +441,7 @@ document.getElementById('contact-form')?.addEventListener('submit', (e) => {
   const msg = document.getElementById('success-msg');
   if (msg) {
     msg.style.display = 'block';
-    e.target.querySelector('button[type="submit"]').textContent = '已送出 ✓';
+    e.target.querySelector('button[type="submit"]').textContent = '已送出';
     e.target.querySelector('button[type="submit"]').style.background = 'var(--c-sage)';
   }
 });

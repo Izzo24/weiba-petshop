@@ -259,3 +259,8 @@ a { text-decoration: none; color: inherit; }
   color: var(--c-beige);
   transform: translateY(-2px);
 }
+
+/* icon SVGs (replacing emoji) */
+.value-icon svg,.contact-icon svg{display:inline-block;vertical-align:middle;}
+.btn-wish svg{width:20px;height:20px;fill:none;stroke:#C4775A;stroke-width:1.8;vertical-align:middle;transition:fill .15s;}
+.btn-wish.active svg{fill:#C4775A;}
