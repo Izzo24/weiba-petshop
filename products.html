@@ -197,11 +197,30 @@
       border-radius: 50%;
       background: var(--c-beige);
       border: none;
-      font-size: 16px;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: transform 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    /* 愛心 SVG:未收藏為描邊空心,收藏(active)為填滿紅色 */
+    .btn-wish svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: var(--c-warm);
+      stroke-width: 1.8;
+      transition: fill 0.2s, stroke 0.2s, transform 0.2s;
     }
     .btn-wish:hover { transform: scale(1.1); }
+    .btn-wish:hover svg { stroke: var(--c-terra); }
+    .btn-wish.active svg {
+      fill: var(--c-terra);
+      stroke: var(--c-terra);
+      transform: scale(1.05);
+    }
+    .btn-wish.active { background: rgba(196,119,90,0.12); }
 
     @media (max-width: 600px) {
       .catalog-grid { grid-template-columns: 1fr; }
@@ -476,6 +495,24 @@ document.querySelectorAll('.btn-wish').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.stopPropagation();
     btn.classList.toggle('active');
+  });
+});
+
+// 商品卡點擊 → 跳轉商品詳情頁(按 DOM 順序對應 id 1..9)。
+// 點愛心 / 加入購物車不跳轉(已 stopPropagation)。
+document.querySelectorAll('.cat-card').forEach((card, i) => {
+  card.style.cursor = 'pointer';
+  card.addEventListener('click', () => {
+    location.href = 'product.html?id=' + (i + 1);
+  });
+});
+// 加入購物車按鈕:不跳轉,顯示已加入回饋
+document.querySelectorAll('.btn-cart').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const orig = btn.textContent;
+    btn.textContent = '已加入 ✓';
+    setTimeout(() => { btn.textContent = orig; }, 1500);
   });
 });
 </script>
