@@ -26,21 +26,25 @@
       background: var(--c-charcoal);
     }
 
-    #hero-canvas {
+    #hero-img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
     }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
+      /* 左側加深,確保 hero 文字在貓狗照上清楚可讀 */
       background: linear-gradient(
-        160deg,
-        rgba(44,36,32,0.45) 0%,
-        rgba(44,36,32,0.15) 50%,
-        rgba(44,36,32,0.6) 100%
+        100deg,
+        rgba(38,30,26,0.78) 0%,
+        rgba(38,30,26,0.45) 42%,
+        rgba(38,30,26,0.15) 70%,
+        rgba(38,30,26,0.35) 100%
       );
       pointer-events: none;
     }
@@ -445,7 +449,7 @@
 
 <!-- ── HERO 3D ────────────────────────────────────────────────────── -->
 <section id="hero" aria-label="主視覺">
-  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <img id="hero-img" src="images/hero-pets.jpg" alt="貓與狗依偎在暖陽窗邊的居家空間" />
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <p class="hero-eyebrow">Warm · Curated · Beloved</p>
@@ -676,160 +680,6 @@
   </div>
 </footer>
 
-<!-- ── THREE.JS HERO ───────────────────────────────────────────────── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-(function() {
-  const canvas = document.getElementById('hero-canvas');
-  if (!canvas || typeof THREE === 'undefined') return;
-
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(55, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-  camera.position.set(0, 0, 7);
-
-  const ambient = new THREE.AmbientLight(0xF5EFE6, 0.6);
-  scene.add(ambient);
-  const pointA = new THREE.PointLight(0xC4775A, 2.5, 20);
-  pointA.position.set(4, 3, 4);
-  scene.add(pointA);
-  const pointB = new THREE.PointLight(0x94A89A, 1.5, 20);
-  pointB.position.set(-5, -2, 3);
-  scene.add(pointB);
-  const pointC = new THREE.PointLight(0xF5EFE6, 1, 16);
-  pointC.position.set(0, 6, 2);
-  scene.add(pointC);
-
-  const matBrown = new THREE.MeshPhongMaterial({ color: 0x8B6F5C, shininess: 80, specular: 0xF5EFE6 });
-  const matTerra = new THREE.MeshPhongMaterial({ color: 0xC4775A, shininess: 60, specular: 0xF5EFE6 });
-  const matSage = new THREE.MeshPhongMaterial({ color: 0x94A89A, shininess: 50, specular: 0xF5EFE6, transparent: true, opacity: 0.85 });
-  const matCream = new THREE.MeshPhongMaterial({ color: 0xF5EFE6, shininess: 40, transparent: true, opacity: 0.7 });
-
-  function makeSphere(r, mat, x, y, z, rx, ry) {
-    const g = new THREE.SphereGeometry(r, 32, 32);
-    const m = new THREE.Mesh(g, mat);
-    m.position.set(x, y, z);
-    if (rx) m.rotation.x = rx;
-    if (ry) m.rotation.y = ry;
-    return m;
-  }
-  function makeBox(w, h, d, mat, x, y, z, rx, ry, rz) {
-    const g = new THREE.BoxGeometry(w, h, d, 2, 2, 2);
-    const m = new THREE.Mesh(g, mat);
-    m.position.set(x, y, z);
-    if (rx) m.rotation.x = rx;
-    if (ry) m.rotation.y = ry;
-    if (rz) m.rotation.z = rz;
-    return m;
-  }
-  function makeTorus(R, r, mat, x, y, z, rx) {
-    const g = new THREE.TorusGeometry(R, r, 24, 64);
-    const m = new THREE.Mesh(g, mat);
-    m.position.set(x, y, z);
-    m.rotation.x = rx || 0;
-    return m;
-  }
-  function makeCone(r, h, mat, x, y, z) {
-    const g = new THREE.ConeGeometry(r, h, 32);
-    const m = new THREE.Mesh(g, mat);
-    m.position.set(x, y, z);
-    return m;
-  }
-
-  const objects = [];
-  const torusMain = makeTorus(1.4, 0.18, matBrown, 2.8, 0.4, -1.5, Math.PI * 0.3);
-  scene.add(torusMain);
-  objects.push({ mesh: torusMain, speed: 0.4, offset: 0, floatAmp: 0.18, rotX: 0.003, rotY: 0.005 });
-  const sph1 = makeSphere(0.65, matTerra, -3.2, 1.5, -0.5);
-  scene.add(sph1);
-  objects.push({ mesh: sph1, speed: 0.5, offset: 1.2, floatAmp: 0.22, rotX: 0.002, rotY: 0.004 });
-  const sph2 = makeSphere(0.35, matTerra, -2.6, 2.4, 0.3);
-  scene.add(sph2);
-  objects.push({ mesh: sph2, speed: 0.6, offset: 0.5, floatAmp: 0.16, rotX: 0.003, rotY: 0.002 });
-  const sph3 = makeSphere(0.3, matTerra, -3.7, 2.2, 0.2);
-  scene.add(sph3);
-  objects.push({ mesh: sph3, speed: 0.55, offset: 0.8, floatAmp: 0.14, rotX: 0.004, rotY: 0.003 });
-  const sph4 = makeSphere(0.28, matBrown, -2.4, 0.8, 0.5);
-  scene.add(sph4);
-  objects.push({ mesh: sph4, speed: 0.48, offset: 1.8, floatAmp: 0.19, rotX: 0.002, rotY: 0.005 });
-  const box1 = makeBox(0.9, 0.5, 0.5, matSage, 3.5, -1.8, -0.5, 0.4, 0.6, 0.2);
-  scene.add(box1);
-  objects.push({ mesh: box1, speed: 0.35, offset: 2.5, floatAmp: 0.25, rotX: 0.004, rotY: 0.006 });
-  const torusSmall = makeTorus(0.55, 0.12, matCream, -1.2, -2.2, 0.8, Math.PI * 0.15);
-  scene.add(torusSmall);
-  objects.push({ mesh: torusSmall, speed: 0.7, offset: 0.3, floatAmp: 0.2, rotX: 0.005, rotY: 0.007 });
-  const cone1 = makeCone(0.28, 0.7, matBrown, 1.2, 2.8, 0.6);
-  scene.add(cone1);
-  objects.push({ mesh: cone1, speed: 0.42, offset: 3.1, floatAmp: 0.17, rotX: 0.006, rotY: 0.003 });
-  const cone2 = makeCone(0.2, 0.5, matTerra, -0.8, -3.0, -0.3);
-  scene.add(cone2);
-  objects.push({ mesh: cone2, speed: 0.52, offset: 1.5, floatAmp: 0.21, rotX: 0.004, rotY: 0.008 });
-  const sphBg1 = makeSphere(0.18, matCream, 0.6, 3.2, -1.2);
-  scene.add(sphBg1);
-  objects.push({ mesh: sphBg1, speed: 0.8, offset: 2.0, floatAmp: 0.12, rotX: 0, rotY: 0 });
-  const sphBg2 = makeSphere(0.14, matSage, -1.8, 3.5, -0.5);
-  scene.add(sphBg2);
-  objects.push({ mesh: sphBg2, speed: 0.9, offset: 4.0, floatAmp: 0.1, rotX: 0, rotY: 0 });
-
-  const PARTICLE_COUNT = 220;
-  const pPositions = new Float32Array(PARTICLE_COUNT * 3);
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    pPositions[i * 3]     = (Math.random() - 0.5) * 14;
-    pPositions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-    pPositions[i * 3 + 2] = (Math.random() - 0.5) * 6 - 2;
-  }
-  const pGeo = new THREE.BufferGeometry();
-  pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
-  const pMat = new THREE.PointsMaterial({ color: 0xF5EFE6, size: 0.045, transparent: true, opacity: 0.55, sizeAttenuation: true });
-  const particles = new THREE.Points(pGeo, pMat);
-  scene.add(particles);
-
-  let mouseX = 0, mouseY = 0;
-  let targetX = 0, targetY = 0;
-  window.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX / window.innerWidth  - 0.5) * 2;
-    mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-  });
-  const onResize = () => {
-    const w = canvas.clientWidth;
-    const h = canvas.clientHeight;
-    renderer.setSize(w, h);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  };
-  window.addEventListener('resize', onResize);
-  const clock = new THREE.Clock();
-  let animId;
-  const heroEl = document.getElementById('hero');
-  const animate = () => {
-    animId = requestAnimationFrame(animate);
-    const t = clock.getElapsedTime();
-    targetX += (mouseX * 0.35 - targetX) * 0.055;
-    targetY += (-mouseY * 0.25 - targetY) * 0.055;
-    camera.position.x = targetX;
-    camera.position.y = targetY;
-    camera.lookAt(0, 0, 0);
-    objects.forEach(obj => {
-      const base = obj.mesh.userData._baseY ?? obj.mesh.position.y;
-      if (!obj.mesh.userData._baseY) obj.mesh.userData._baseY = base;
-      obj.mesh.position.y = base + Math.sin(t * obj.speed + obj.offset) * obj.floatAmp;
-      obj.mesh.rotation.x += obj.rotX;
-      obj.mesh.rotation.y += obj.rotY;
-    });
-    particles.rotation.y = t * 0.03;
-    particles.rotation.x = t * 0.015;
-    renderer.render(scene, camera);
-  };
-  animate();
-  const heroObs = new IntersectionObserver(([entry]) => {
-    if (!entry.isIntersecting) { cancelAnimationFrame(animId); } else { animate(); }
-  });
-  heroObs.observe(heroEl);
-})();
-</script>
 
 <script src="js/main.js"></script>
 </body>
