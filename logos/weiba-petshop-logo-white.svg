@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
-  <text x="28" y="26" font-family="serif" font-size="22" font-weight="700" fill="white" letter-spacing="1">尾巴選物</text>
-  <text x="28" y="44" font-family="sans-serif" font-size="10" font-weight="400" fill="rgba(255,255,255,0.75)" letter-spacing="3">WEIBA · SELECT</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 224 60" width="224" height="60">
+  <text x="50" y="26" font-family="serif" font-size="22" font-weight="700" fill="white" letter-spacing="1">尾巴選物</text>
+  <text x="50" y="44" font-family="sans-serif" font-size="10" font-weight="400" fill="rgba(255,255,255,0.75)" letter-spacing="3">WEIBA · SELECT</text>
   <circle cx="12" cy="12" r="4" fill="white"/>
   <circle cx="22" cy="8"  r="3" fill="white"/>
   <circle cx="30" cy="10" r="3" fill="white"/>
